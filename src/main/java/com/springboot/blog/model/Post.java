@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +27,10 @@ public class Post {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    // mappedBy will look for post property name in comments pojo
+    // CascadeType.ALL will make sure that associated records get dropped along with owning object
+    // try to refactor Set collection into a List collection
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true) // Post is the owning side of the relationship
+    private Set<Comment> comments = new HashSet<>();
 }
