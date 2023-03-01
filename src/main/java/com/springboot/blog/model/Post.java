@@ -1,14 +1,14 @@
 package com.springboot.blog.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -31,6 +31,9 @@ public class Post {
     // mappedBy will look for post property name in comments pojo
     // CascadeType.ALL will make sure that associated records get dropped along with owning object
     // try to refactor Set collection into a List collection
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true) // Post is the owning side of the relationship
+    // USE FetchType.EAGER INSTEAD OF FetchType.LAZY
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Comment> comments = new HashSet<>();
+
+
 }
