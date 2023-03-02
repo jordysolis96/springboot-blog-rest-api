@@ -5,6 +5,7 @@ import com.springboot.blog.dto.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.utils.AppConstants;
 import jakarta.validation.Valid;
+import org.modelmapper.internal.util.Lists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,6 +70,14 @@ public class PostController {
     public ResponseEntity<String> deletePost(@PathVariable(name = "id")long id){
         postService.deletePostById(id);
         return new ResponseEntity<>("Post entity deleted successfully", HttpStatus.OK);
+    }
+
+    // Build get Post by Category REST API
+    // http://localhost:8080/api/posts/category/3
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable(name = "id") long categoryId){
+        List<PostDto> postDtos = postService.getPostByCategory(categoryId);
+        return ResponseEntity.ok(postDtos);
     }
 
 
