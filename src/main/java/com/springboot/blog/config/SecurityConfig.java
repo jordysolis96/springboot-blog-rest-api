@@ -58,6 +58,7 @@ public class SecurityConfig {
 //                        authorize.anyRequest().authenticated()
                                 // will permit all users to get endpoints
                                 authorize.requestMatchers(HttpMethod.GET, "api/**").permitAll()
+                                        .requestMatchers(HttpMethod.GET, "api/categories/**").permitAll()
                                         .requestMatchers("/api/auth/**").permitAll()
                                         .anyRequest().authenticated()
                 ).exceptionHandling(exception -> exception
