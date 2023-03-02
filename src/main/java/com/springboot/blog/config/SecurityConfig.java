@@ -32,7 +32,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
@@ -44,14 +44,14 @@ public class SecurityConfig {
                 // any request will be authenticated
                 .authorizeHttpRequests((authorize) ->
 //                        authorize.anyRequest().authenticated()
-                        // will permit all users to get endpoints
-                        authorize.requestMatchers(HttpMethod.GET, "api/**").permitAll()
-                                .anyRequest().authenticated()
-                ).httpBasic(Customizer.withDefaults());
+                                // will permit all users to get endpoints
+                                authorize.requestMatchers(HttpMethod.GET, "api/**").permitAll()
+                                        .requestMatchers("/api/auth/**").permitAll()
+                                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }
-
 
 //    @Bean
 //    public UserDetailsService userDetailsService(){
